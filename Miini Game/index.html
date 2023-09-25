@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styling.css">
+    <title>Kia Mini Games</title>
+</head>
+<body>
+    <div id="app">
+        <div class="summary">
+        <h1 class="title">MATCH RESULT</h1>
+        <br />
+        <h1 id="inGame"></h1>
+        <h3 id="result"></h3>
+        </div>
+        <div class="Games">
+            <div class="option" onclick="pickOption('✌️')">✌️</div>
+            <div class="option" onclick="pickOption('✊')">✊</div>
+            <div class="option" onclick="pickOption('🖐️')">🖐️</div>
+        </div>
+    </div>
+
+    <script>
+        class Start{
+            constructor(){
+                this.playerName = "Kamu"
+                this.botName = "Computer"
+                this.playerOption;
+                this.botOption;
+                this.winner = ""
+            }
+            
+            get getBotOption(){
+                return this.botOption;
+            }
+
+            set setBotOption(option){
+                this.botOption = option;
+            }
+
+            get getPlayerOption(){
+                return this.playerOption
+            }
+
+            set setPlayerOption (option) {
+                this.playerOption = option;
+            }
+
+            botBrain(){
+                const option = ["✌️","✊","🖐️"];
+                const bot = option[Math.floor(Math.random() * option.length)];
+                return bot;
+            }
+
+            wincalculation() {
+                if(this.botOption == "✌️" && this.playerOption == "✊"){
+                    return this.winner = this.playerName
+                }else if(this.botOption == "✌️" && this.playerOption == "🖐️"){
+                    return this.winner = this.botName;
+                }else if(this.botOption == "✊" && this.playerOption == "✌️"){
+                    return this.winner = this.botName;
+                }else if(this.botOption == "🖐️" && this.playerOption == "✊"){
+                    return this.winner = this.botName
+                }else if(this.botOption == "🖐️" && this.playerOption == "✌️"){
+                    return this.winner = this.playerName
+                }else if(this.botOption == "✊" && this.playerOption == "🖐️"){
+                    return this.winner = this.playerName
+                }else{
+                    return this.winner = "SERI"
+                }
+            }
+
+
+            macthResult() {
+                if(this.winner != "SERI"){
+                    return `Selamat ${this.winner} Menang!`;
+                }else{
+                    return `Wahh ${this.winner}, Tidak Ada Yang Menang😝`;
+                }
+            }
+        }
+       function pickOption(params) {
+        const start = new Start();
+        start.setPlayerOption = params;
+        start.setBotOption = start.botBrain();
+        start.wincalculation();
+        console.log(`player: ${start.getPlayerOption} VS bot: ${start.getBotOption}`);
+        console.log("hasil akhir: ", start.macthResult())
+
+       const inGame = document.getElementById("inGame");
+       const result = document.getElementById("result");
+            inGame.textContent = "..."
+            result.textContent = "..."
+       setTimeout(() => {
+            inGame.textContent = `${start.getPlayerOption} VS ${start.getBotOption}`
+            result.textContent = start.macthResult();
+       }, 1500);
+
+       
+    }
+    </script>
+
+</body>
+</html>
